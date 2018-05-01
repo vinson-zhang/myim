@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>FreedomChat</title>
+    <!--　引入protobuf相关js文件　-->
+    <script src="proto.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <style>
+        .mint-cell{
+            width: 80%;
+        }
+        .my-send{
+            width: 20%;
+        }
+        .mint-button-text{
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .my-message-show{
+            max-width: 70%;
+        }
+        .my-index-list{
+            background-color: #EEEEEE;
+        }
+        .my-message-show{
+            /*background-color: #ffffff;*/
+            /*display: block;*/
+            /*margin-bottom: 2%;*/
+            width: 100%;
+            margin-top: 2%;
+            margin-left: 2%;
+            /*display:flex;!*Flex布局*!*/
+            /*display: -webkit-flex; !* Safari *!*/
+            /*align-items:center;!*指定垂直居中*!*/
+            /*float: left;*/
+        }
+        .mint-main-button{
+            background-color: #18d3ff;
+        }
+        .my-head-show{
+            background-color: #18d3ff;
+        }
+        .my-message-show-self{
+            /*background-color: #EEEEEE;*/
+            width: 100%;
+            margin-top: 2%;
+            margin-right: 2%;
+            float: right;
+        }
+        .my-message-show-btn{
+            margin-left: 2%;
+        }
+        .my-message-show-self-btn{
+            float: right;
+            margin-right: 2%;
+            background-color: #4caf50;
+            color: #000000;
+            position: relative;
+            clear: both;
+        }
+        .my-border-radius{
+            /*border-radius:50%;*/
+            background-color: #EEEEEE;
+        }
+        .my-border-radius-self{
+            /*border-radius:50%;*/
+            background-color: #EEEEEE;
+            position: relative;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div id="app-1">
+    <mt-header title="麦克">
+      <!--  <router-link to="/" slot="left">
+            <mt-button icon="back">back</mt-button>
+        </router-link>-->
+        <mt-button icon="back" slot="left"></mt-button>
+        <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+
+    <!--<mt-tab-container v-model="active">-->
+    <mt-index-list :show-indicator="false" class="my-index-list">
+        <div v-for="item in messageList" >
+            <!--<div style="display: inline">-->
+                <!--<mt-palette-button class="my-head-show" :radius="40" content="ta"-->
+                                   <!--style="left:2%;  color:#fff2f9;background-color:#18d3ff; "></mt-palette-button>-->
+            <!--</div>-->
+            <div class="my-message-show" v-if="item.type == 2">
+                <mt-button class="my-border-radius fa fa-user-circle"  type="default" ></mt-button>
+                <mt-button  class="my-message-show-btn" type="default">{{item.content}}</mt-button>
+            </div>
+            <div class="my-message-show-self" v-else>
+                <mt-button class="my-message-show-self-btn" type="default">{{item.content}}</mt-button>
+                <mt-button class="my-border-radius-self fa fa-user-circle"  type="default" ></mt-button>
+            </div>
+
+        </div>
+    </mt-index-list>
+
+    <mt-tabbar>
+        <mt-field placeholder="please input message...." type="text" v-model="message"></mt-field>
+        <mt-button type="primary" @click.native="handleClick" v-on:keyup.13="handleClick" class="my-send fa fa-send">发送</mt-button>
+        <!--<mt-button type="primary" size="normal" @click.native="handleClick">发送</mt-button>-->
+    </mt-tabbar>
+</div>
+</body>
+<!-- 先引入 Vue -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+<script type="text/javascript">
+    var BaseMessage;
+    // var baseMessage;
+    // var buffer;
+    var TextMessage;
+    protobuf.load("/Message.proto", function (err, root) {
+        if (err) throw err;
+        TextMessage = root.lookup("TextMessage");
+        // var textMessage = TextMessage.create({ msgId: "1", content: "hello"})
+        // TextMessage.
+        BaseMessage = root.lookup("BaseMessage");
+        // baseMessage = BaseMessage.create({ msgType: 1,bytesData:TextMessage.encode(textMessage).finish()});
+        // console.log(baseMessage)
+        // buffer = BaseMessage.encode(baseMessage).finish();
+    });
+
+
+
+
+    // var wsUri = "ws://localhost:8889/ws";
+    // var wsUri = "ws://bolatuzhang.6655.la:19762/ws";
+    var wsUri = "ws://192.168.1.105:8889/ws";
+    var output;
+
+    function init(callback1) {
+        output = document.getElementById("output");
+        testWebSocket(callback1);
+    }
+
+    function testWebSocket(callback1) {
+        websocket = new WebSocket(wsUri);
+        websocket.onopen = function (evt) {
+            onOpen(evt)
+        };
+        websocket.onclose = function (evt) {
+            onClose(evt)
+        };
+        websocket.onmessage = function (evt) {
+            onMessage(evt,callback1)
+        };
+        websocket.onerror = function (evt) {
+            onError(evt)
+        };
+    }
+
+    function onOpen(evt) {
+        writeToScreen("CONNECTED");
+        // doSend(buffer);
+    }
+    function onClose(evt) {
+        writeToScreen("DISCONNECTED");
+    }
+
+    function onMessage(evt,callback1) {
+        var reader = new FileReader();
+        console.log(evt.data)
+        reader.readAsArrayBuffer(evt.data);
+        reader.onload = function (e) {
+            var buf = new Uint8Array(reader.result);
+            console.log(BaseMessage.decode(buf));
+            var tempMessage = BaseMessage.decode(buf);
+            if(tempMessage.msgType == 1){
+                console.log("i am text");
+                console.log(TextMessage);
+
+                var textMessge = TextMessage.decode(tempMessage.bytesData);
+                console.log(textMessge);
+                callback1&&callback1(textMessge);
+
+            }
+            writeToScreen('<span style="color: blue;">RESPONSE: ' + BaseMessage.decode(buf) + '</span>');
+        }
+    }
+
+    function onError(evt) {
+        writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+    }
+
+    function doSend(baseMessage) {
+        writeToScreen("SENT: " + baseMessage);
+        websocket.send(baseMessage);
+    }
+    
+
+    function writeToScreen(message) {
+        var pre = document.createElement("p");
+        pre.style.wordWrap = "break-word";
+        pre.innerHTML = message;
+        // output.appendChild(pre);
+    }
+    var app1 = new Vue({
+        el:'#app-1',
+
+        data(){
+            return{
+                word:'',
+                messageList:[],
+                message:''
+
+            }
+        },
+        methods:{
+            handleSubmit(){
+                doSend(this.word)
+            },
+            handleClick: function() {
+                // this.$toast('Hello world!')
+                var baseMessage = this.createMessage(1,this.message);
+                this.messageList.push(this.createShowMessage(1,this.message));
+                doSend(baseMessage);
+
+            },
+            createShowMessage: function(type,content){
+                var message = {"type":type,"content":content};
+                return message;
+            },
+            createMessage: function (type,message) {
+                var messageResult;
+                var tempMessage;
+                if(type == 1){
+                    tempMessage = TextMessage.create({ msgId: "1", content: message});
+                    tempMessage = TextMessage.encode(tempMessage).finish();
+                }
+                baseMessage = BaseMessage.create({ msgType: 1,bytesData:tempMessage});
+                messageResult = BaseMessage.encode(baseMessage).finish();
+                return messageResult;
+            }
+        },
+        mounted(){
+            // window.addEventListener("load", init(function(){
+            //     console.log(11111)
+            // }), false);
+            var vm = this;
+            init(function(textMessage){
+                // console.log(ss)
+                console.log(textMessage)
+                vm.messageList.push(vm.createShowMessage(2,textMessage.content));
+            })
+
+        }
+    })
+</script>
+</html>

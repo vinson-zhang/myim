@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>websocket 客户端</title>
+	<!--<script src="//cdn.rawgit.com/dcodeIO/protobuf.js/6.8.6/dist/protobuf.js"></script>-->
+	<script src="../js/protobuf/ByteBufferAB.min.js"/>
+	<script src="../js/protobuf/Long.min.js"/>
+	<!--<script src="//cdn.rawgit.com/dcodeIO/protobuf.js/6.X.X/dist/protobuf.min.js"></script>-->
+</head>
+<body>
+
+	<script type="application/javascript">
+    var socket;
+    if (window.WebSocket) {
+       socket = new WebSocket("ws://localhost:8889/ws");
+       //当服务端发送消息给客户端时,该方法会被调用
+       socket.onmessage = function (event) {
+          var responseContent = document.getElementById("responseText");
+           responseContent.value = responseContent.value + "\n" + event.data;
+       };
+
+       socket.onopen = function (event) {
+           var responseContent = document.getElementById("responseText");
+           responseContent.value = "连接建立了";
+       };
+
+        socket.onclose = function (event) {
+            var responseContent = document.getElementById("responseText");
+            responseContent.value = responseContent.value + "\n" + "连接断开了";
+        }
+    }
+    else {
+        alert('浏览器不支持websocket');
+    }
+
+    function send(message) {
+        if (!window.WebSocket){
+            return;
+        }
+
+        if (socket.readyState == WebSocket.OPEN) {
+             socket.send(message);
+        }
+        else {
+            alert('连接还未建立');
+        }
+    }
+	</script>
+
+	<form onsubmit="return false;">
+		<textarea id="messageId" name="message" style="width: 400px; height: 200px"></textarea>
+			
+		<input type="button" value="发送按钮" onclick="send(document.getElementById('messageId').value)">
+			
+		<h3>服务端输出:</h3>
+		
+		<textarea id="responseText" name="message" style="width: 400px; height: 300px"></textarea>
+	</form>
+</body>
+</html>

@@ -1,0 +1,160 @@
+
+.bar-nav{
+    background-color: #656b79;
+    color: #ffffff;
+    font-size: 1rem;
+    height: 3rem;
+}
+.bar-nav .title{
+    color: #ffffff;
+    font-size: 1.5rem;
+    height: 3rem;
+    line-height: 3rem;
+}
+
+.content{
+    background-color: #EEEEEE;
+}
+
+.fa{
+    position: relative;
+    z-index: 20;
+    padding: .5rem .1rem;
+    font-size: 1.5rem;
+    line-height: 2rem!important;
+}
+
+.bar-tab{
+    line-height: 3rem;
+    height: 3rem;
+}
+
+.my-message-input{
+    line-height: 3rem;
+    border: none;
+    border-bottom: #656b79;
+    width: 100%;
+    margin-left: 1%;
+    margin-right: 1%;
+    /*padding-left: 1%;*/
+    /*padding-right: 1%;*/
+}
+
+.my-message-button{
+    line-height: 3rem!important;
+    display:flex;/*Flex布局*/
+    display: -webkit-flex; /* Safari */
+    align-items:center;/*指定垂直居中*/
+    background-color: #05af34;
+    top: 0rem!important;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.my-message-show{
+
+}
+
+.card-content-inner{
+    max-width: 70%;
+    min-width: 0%;
+}
+.content{
+    top: 3rem!important;
+    bottom: 3rem!important;
+}
+
+
+<!-- 气泡框 -->
+
+.chat-sender{
+    clear:both;
+    font-size: 80%;
+    width: 30%;
+    left: 40%;
+}
+.chat-sender div:nth-of-type(1){
+    float: left;
+}
+.chat-sender div:nth-of-type(2){
+    margin: 0 50px 2px 50px;
+    padding: 0px;
+    color: #848484;
+    font-size: 70%;
+    text-align: left;
+}
+.chat-sender div:nth-of-type(3){
+    background-color: white;
+    /*float: left;*/
+    position: relative;
+    margin: 0 50px 10px 50px;
+    padding: 10px 10px 10px 10px;
+    border-radius:7px;
+    text-indent: -12px;
+}
+
+.chat-receiver{
+    clear:both;
+    font-size: 80%;
+    width: auto;
+    max-width: 70%;
+    left: 68%;
+    position: relative;
+}
+.chat-receiver p{
+    display: inline;
+    word-wrap:break-word;
+    word-break:break-all;
+    overflow: hidden;/*这个参数根据需要来绝对要不要*/
+    max-width: 50%;
+    min-width: 0%;
+    float: right;
+}
+
+.chat-receiver div:nth-of-type(1){
+    float: right;
+}
+.chat-receiver div:nth-of-type(2){
+    /*margin: 0px 50px 2px 50px;*/
+    float: right;
+    padding: 0px;
+    color: #848484;
+    font-size: 70%;
+    text-align: right;
+}
+.chat-receiver div:nth-of-type(3){
+    float:right;
+    background-color: #b2e281;
+    /*margin: 0px 50px 10px 50px;*/
+    /*padding: 10px 10px 10px 10px;*/
+    border-radius:7px;
+}
+
+.chat-receiver div:first-child img,
+.chat-sender div:first-child img{
+    width: 40px;
+    height: 40px;
+    /*border-radius: 10%;*/
+}
+
+.chat-left_triangle{
+    height: 0px;
+    width: 0px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+    position: relative;
+    left: -22px;
+    top: 3px;
+}
+.chat-right_triangle{
+    height: 0px;
+    width: 0px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #b2e281;
+    position: relative;
+    right:-22px;
+    top:3px;
+}
+

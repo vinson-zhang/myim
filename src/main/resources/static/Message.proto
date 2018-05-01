@@ -1,0 +1,23 @@
+syntax = "proto3";
+option java_package="com.zt.project.im.protobuf";
+//option java_outer_classname="Student";
+message BaseMessage{
+    int32  len = 1;
+    int32  msgType =2;
+    bytes  bytesData = 3;
+//    int32  checkSum = 5; // adler32 of nameLen, typeName and protobufData
+}
+
+
+message LoginRequest{
+    int32 accountId = 1;
+    int32 registId = 2;
+    string token = 3;
+}
+
+message TextMessage{
+    string msgId = 1;
+    string userId = 2;
+    string reciverId = 3;
+    string content = 4;
+}

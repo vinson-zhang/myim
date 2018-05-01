@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>FreedomChat</title>
+    <!--　引入protobuf相关js文件　-->
+    <script src="proto.js"></script>
+    <!-- 引入样式 -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.css">
+
+    <!--如果你用到了拓展包中的组件，还需要引用下面两个-->
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
+    <!--<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">-->
+    <!--<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>-->
+    <!--<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>-->
+
+    <!--<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/??sm.min.css,sm-extend.min.css">-->
+    <!--<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/??sm.min.js,sm-extend.min.js' charset='utf-8'></script>-->
+
+    <!-- 自定义css -->
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+<div id="app-1">
+    <div class="page">
+        <!-- 标题栏 -->
+        <header class="bar bar-nav">
+            <a class="icon fa icon-left pull-left"></a>
+            <a class="fa fa-user pull-right"></a>
+            <h1 class="title">麦克</h1>
+        </header>
+
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <div class="tab-item external" href="#" style="width: 20%">
+                <input class="my-message-input" type="text" placeholder="message..." v-model="message">
+            </div>
+            <div class="tab-item" href="#">
+                <a href="#" class="button button-fill button-success button-big my-message-button" v-on:click="handleClick">
+                    <span class="fa fa-wechat"></span>
+                    发送
+                </a>
+            </div>
+        </nav>
+
+        <!-- 这里是页面内容区 -->
+        <div class="content">
+            <div v-for="item in messageList" >
+                <!--<div class="my-message-show " v-if="item.type == 2">-->
+                    <div class="chat-sender" v-if="item.type == 2">
+                        <div><img src="./images/123.png"></div>
+                        <div>阿奔 Ben</div>
+                        <div style="width: auto;max-width: 60%">
+                            <div class="chat-left_triangle"></div>
+                            <span> 苹果增加三款配件的颜色选项</span>
+                        </div>
+                    <!--</div>-->
+                    <!--<div class="card-content">-->
+                        <!--<div class="card-content-inner">{{item.content}}</div>-->
+                    <!--</div>-->
+                </div>
+                <!--<div class="my-message-show-self" v-else>-->
+                    <div class="chat-receiver" v-else>
+                        <div><img src="./images/123.png"></div>
+                        <div style="position: relative;display: inline">我</div>
+                        <div style="width: auto;max-width: 60%;display: inline-block;">
+                            <div class="chat-right_triangle"></div>
+                            <p>{{item.content}}</p>
+                        </div>
+                    </div>
+                <!--</div>-->
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--<mt-tabbar>-->
+        <!--<mt-field placeholder="please input message...." type="text" v-model="message"></mt-field>-->
+        <!--<mt-button type="primary" @click.native="handleClick" v-on:keyup.13="handleClick" class="my-send fa fa-send">发送</mt-button>-->
+        <!--&lt;!&ndash;<mt-button type="primary" size="normal" @click.native="handleClick">发送</mt-button>&ndash;&gt;-->
+    <!--</mt-tabbar>-->
+</div>
+</body>
+<!-- 先引入 Vue -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.js' charset='utf-8'></script>
+
+
+
+<script type="text/javascript">
+    var BaseMessage;
+    var TextMessage;
+    protobuf.load("/Message.proto", function (err, root) {
+        if (err) throw err;
+        TextMessage = root.lookup("TextMessage");
+        BaseMessage = root.lookup("BaseMessage");
+    });
+
+
+
+
+    // var wsUri = "ws://localhost:8889/ws";
+    // var wsUri = "ws://bolatuzhang.6655.la:19762/ws";
+    var wsUri = "ws://192.168.1.105:8889/ws";
+    var output;
+
+    function init(callback1) {
+        output = document.getElementById("output");
+        testWebSocket(callback1);
+    }
+
+    function testWebSocket(callback1) {
+        websocket = new WebSocket(wsUri);
+        websocket.onopen = function (evt) {
+            onOpen(evt)
+        };
+        websocket.onclose = function (evt) {
+            onClose(evt)
+        };
+        websocket.onmessage = function (evt) {
+            onMessage(evt,callback1)
+        };
+        websocket.onerror = function (evt) {
+            onError(evt)
+        };
+    }
+
+    function onOpen(evt) {
+        writeToScreen("CONNECTED");
+        // doSend(buffer);
+    }
+    function onClose(evt) {
+        writeToScreen("DISCONNECTED");
+    }
+
+    function onMessage(evt,callback1) {
+        var reader = new FileReader();
+        console.log(evt.data)
+        reader.readAsArrayBuffer(evt.data);
+        reader.onload = function (e) {
+            var buf = new Uint8Array(reader.result);
+            console.log(BaseMessage.decode(buf));
+            var tempMessage = BaseMessage.decode(buf);
+            if(tempMessage.msgType == 1){
+                console.log("i am text");
+                console.log(TextMessage);
+
+                var textMessge = TextMessage.decode(tempMessage.bytesData);
+                console.log(textMessge);
+                callback1&&callback1(textMessge);
+
+            }
+            writeToScreen('<span style="color: blue;">RESPONSE: ' + BaseMessage.decode(buf) + '</span>');
+        }
+    }
+
+    function onError(evt) {
+        writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+    }
+
+    function doSend(baseMessage) {
+        writeToScreen("SENT: " + baseMessage);
+        websocket.send(baseMessage);
+    }
+    
+
+    function writeToScreen(message) {
+        var pre = document.createElement("p");
+        pre.style.wordWrap = "break-word";
+        pre.innerHTML = message;
+        // output.appendChild(pre);
+    }
+    var app1 = new Vue({
+        el:'#app-1',
+
+        data(){
+            return{
+                word:'',
+                messageList:[],
+                message:''
+
+            }
+        },
+        methods:{
+            handleSubmit(){
+                doSend(this.word)
+            },
+            handleClick: function() {
+                // this.$toast('Hello world!')
+                var baseMessage = this.createMessage(1,this.message);
+                this.messageList.push(this.createShowMessage(1,this.message));
+                doSend(baseMessage);
+
+            },
+            createShowMessage: function(type,content){
+                var message = {"type":type,"content":content};
+                return message;
+            },
+            createMessage: function (type,message) {
+                var messageResult;
+                var tempMessage;
+                if(type == 1){
+                    tempMessage = TextMessage.create({ msgId: "1", content: message});
+                    tempMessage = TextMessage.encode(tempMessage).finish();
+                }
+                baseMessage = BaseMessage.create({ msgType: 1,bytesData:tempMessage});
+                messageResult = BaseMessage.encode(baseMessage).finish();
+                return messageResult;
+            }
+        },
+        mounted(){
+            // window.addEventListener("load", init(function(){
+            //     console.log(11111)
+            // }), false);
+            var vm = this;
+            init(function(textMessage){
+                // console.log(ss)
+                console.log(textMessage)
+                vm.messageList.push(vm.createShowMessage(2,textMessage.content));
+            })
+
+        }
+    })
+</script>
+</html>
