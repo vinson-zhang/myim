@@ -35,4 +35,8 @@ public class UserController {
         userService.insert(user);
         return "success:"+user.toString();
     }
+
+
+
+
 }

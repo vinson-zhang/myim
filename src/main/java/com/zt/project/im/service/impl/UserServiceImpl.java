@@ -6,6 +6,7 @@ import com.zt.project.im.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,13 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> getUserInfo() {
-        return userDao.findUserInfo();
+        List<User> users = new ArrayList<User>();
+        User user = new User();
+        user.setUsername("mike");
+        user.setPassword("789");
+        users.add(user);
+//        return userDao.findUserInfo();
+        return users;
     }
 
     @Override

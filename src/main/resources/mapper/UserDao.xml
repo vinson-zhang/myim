@@ -11,6 +11,11 @@
         values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
         )
     </insert>
+
+    <insert id="addUser" parameterType="">
+
+    </insert>
+
     <delete id="delUserInfo" parameterType="User">
         delete from user where username = #{username,jdbcType=VARCHAR}
     </delete>

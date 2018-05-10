@@ -13,5 +13,7 @@ public interface IUserService {
     List<User> getUserInfo();
 
     void insert(User user);
+
+    void addUser();
 }
 
