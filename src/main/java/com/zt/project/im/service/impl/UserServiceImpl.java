@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,5 +35,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void insert(User user) {
         userDao.addUserInfo(user);
+    }
+
+    @Override
+    public void addUser(User user) {
+        user.setCreateTime(new Date());
+        userDao.addUser(user);
+    }
+
+    @Override
+    public User getUser(String username) {
+        return userDao.getUser(username);
     }
 }

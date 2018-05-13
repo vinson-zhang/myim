@@ -2,6 +2,7 @@ package com.zt.project.im.dao;
 
 import com.zt.project.im.bean.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,10 +14,20 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    List<User> findUserInfo();
+
+    /**
+     * 获取用户信息
+     * @param username
+     * @return
+     */
+    User getUser(@Param("username") String username);
 
     void addUserInfo(User user);
 
+    /**
+     * 添加用户
+     * @param user
+     */
     void addUser(User user);
 
     void delUserInfo(User user);

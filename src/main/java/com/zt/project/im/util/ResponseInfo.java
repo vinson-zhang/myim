@@ -7,17 +7,17 @@ package com.zt.project.im.util;
  */
 public class ResponseInfo<T> {
 
-    private String code;
+    private Integer code = ErrorCodeEnum.SUCCESS.getCode();
 
-    private String desc;
+    private String desc = ErrorCodeEnum.SUCCESS.getDesc();
 
     private T result;
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

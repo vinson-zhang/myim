@@ -14,6 +14,17 @@ public interface IUserService {
 
     void insert(User user);
 
-    void addUser();
+    /**
+     * 添加用户信息
+     * @param user
+     */
+    void addUser(User user);
+
+    /**
+     * 获取用户信息
+     * @param username
+     * @return
+     */
+    User getUser(String username);
 }
 

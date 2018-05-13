@@ -2,8 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zt.project.im.dao.UserDao">
 
-    <select id="findUserInfo" resultType="User">
-        select username,password  from user;
+    <select id="getUser" resultType="User">
+        select
+        id,username,password,salt,email,nickname,age,gender,head_photo,create_time,modify_time
+        from t_user
+        where username = #{username}
     </select>
     <insert id="addUserInfo" parameterType="User">
         insert into user (username, password
@@ -12,8 +15,58 @@
         )
     </insert>
 
-    <insert id="addUser" parameterType="">
-
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            username,
+            password,
+            <if test="salt != null and salt != ''">
+                salt,
+            </if>
+            <if test="email != null and email != ''">
+                email,
+            </if>
+            <if test="nickname != null and nickname != ''">
+                nickname,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="headPhoto != null">
+                head_photo,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{username},
+            #{password},
+            <if test="salt != null and salt != ''">
+                #{salt},
+            </if>
+            <if test="email != null and email != ''">
+                #{email},
+            </if>
+            <if test="nickname != null and nickname != ''">
+                #{nickname},
+            </if>
+            <if test="age != null">
+                #{age},
+            </if>
+            <if test="gender != null">
+                #{gender},
+            </if>
+            <if test="headPhoto != null">
+                #{headPhoto},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
     </insert>
 
     <delete id="delUserInfo" parameterType="User">

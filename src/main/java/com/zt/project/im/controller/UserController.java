@@ -2,6 +2,7 @@ package com.zt.project.im.controller;
 
 import com.zt.project.im.bean.User;
 import com.zt.project.im.service.IUserService;
+import com.zt.project.im.util.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,12 +29,13 @@ public class UserController {
     }
 
     @RequestMapping("/addUserInfo")
-    public String addUserInfo() {
+    public ResponseInfo<User> addUserInfo() {
+        ResponseInfo<User> responseInfo = new ResponseInfo<User>();
         User user = new User();
         user.setUsername("test");
         user.setPassword("123456");
-        userService.insert(user);
-        return "success:"+user.toString();
+        userService.addUser(user);
+        return responseInfo;
     }
 
 
