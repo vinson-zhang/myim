@@ -1,5 +1,7 @@
 package com.zt.project.im.util;
 
+import com.zt.project.im.enumpack.ErrorCodeEnum;
+
 /**
  * ZhangTao
  * 2018/5/10 22:30

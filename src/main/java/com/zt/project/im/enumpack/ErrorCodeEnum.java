@@ -1,4 +1,4 @@
-package com.zt.project.im.util;
+package com.zt.project.im.enumpack;
 
 /**
  * 错误码

@@ -1,6 +1,6 @@
 package com.zt.project.im.handler;
 
-import com.zt.project.im.util.ErrorCodeEnum;
+import com.zt.project.im.enumpack.ErrorCodeEnum;
 import com.zt.project.im.util.MyExceptionUtil;
 import com.zt.project.im.util.ResponseInfo;
 import org.apache.log4j.Logger;

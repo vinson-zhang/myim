@@ -1,7 +1,7 @@
 package com.zt.project.im.controller;
 
 import com.zt.project.im.bean.User;
-import com.zt.project.im.util.ErrorCodeEnum;
+import com.zt.project.im.enumpack.ErrorCodeEnum;
 import com.zt.project.im.util.ResponseInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
