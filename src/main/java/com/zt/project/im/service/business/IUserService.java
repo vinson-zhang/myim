@@ -1,4 +1,4 @@
-package com.zt.project.im.service;
+package com.zt.project.im.service.business;
 
 import com.zt.project.im.bean.User;
 

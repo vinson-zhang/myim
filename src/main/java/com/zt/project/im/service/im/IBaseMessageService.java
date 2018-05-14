@@ -1,4 +1,4 @@
-package com.zt.project.im.service;
+package com.zt.project.im.service.im;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.zt.project.im.protobuf.Message;

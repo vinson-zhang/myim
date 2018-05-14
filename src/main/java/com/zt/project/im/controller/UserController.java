@@ -1,7 +1,7 @@
 package com.zt.project.im.controller;
 
 import com.zt.project.im.bean.User;
-import com.zt.project.im.service.IUserService;
+import com.zt.project.im.service.business.IUserService;
 import com.zt.project.im.util.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -56,8 +56,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({IncorrectCredentialsException.class})
     public ResponseInfo handlerIncorrectCredentialsException(Exception e){
         ResponseInfo responseInfo = new ResponseInfo();
-        responseInfo.setCode(ErrorCodeEnum.PASSWORD_WROMG.getCode());
-        responseInfo.setDesc(ErrorCodeEnum.PASSWORD_WROMG.getDesc());
+        responseInfo.setCode(ErrorCodeEnum.PASSWORD_WRONG.getCode());
+        responseInfo.setDesc(ErrorCodeEnum.PASSWORD_WRONG.getDesc());
         return responseInfo;
     }
 

@@ -1,7 +1,7 @@
 package com.zt.project.im.relam;
 
 import com.zt.project.im.bean.User;
-import com.zt.project.im.service.IUserService;
+import com.zt.project.im.service.business.IUserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

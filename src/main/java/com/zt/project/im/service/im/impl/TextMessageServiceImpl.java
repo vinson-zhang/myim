@@ -1,10 +1,10 @@
-package com.zt.project.im.service.impl;
+package com.zt.project.im.service.im.impl;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.zt.project.im.annotation.CustomServiceAnnotation;
 import com.zt.project.im.protobuf.Message;
-import com.zt.project.im.service.IBaseMessageService;
+import com.zt.project.im.service.im.IBaseMessageService;
 import org.springframework.stereotype.Service;
 
 /**

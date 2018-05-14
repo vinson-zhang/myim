@@ -1,8 +1,8 @@
-package com.zt.project.im.service.impl;
+package com.zt.project.im.service.business.impl;
 
 import com.zt.project.im.bean.User;
 import com.zt.project.im.dao.UserDao;
-import com.zt.project.im.service.IUserService;
+import com.zt.project.im.service.business.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

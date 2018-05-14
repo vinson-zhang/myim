@@ -9,7 +9,7 @@ public enum ErrorCodeEnum {
     OTHER_ERROR(30101,"其他错误"),
     NOT_LOGIN(30104,"请登录"),
     UNKNOWN_ACCOUNT(30105,"未知账户"),
-    PASSWORD_WROMG(30106,"密码错误")
+    PASSWORD_WRONG(30106,"密码错误")
     ;
 
     private Integer code;
