@@ -4,6 +4,7 @@ import com.zt.project.im.bean.User;
 import com.zt.project.im.service.business.IUserService;
 import com.zt.project.im.util.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,11 +30,10 @@ public class UserController {
     }
 
     @RequestMapping("/addUserInfo")
-    public ResponseInfo<User> addUserInfo() {
+    public ResponseInfo<User> addUserInfo(@RequestBody User user) {
         ResponseInfo<User> responseInfo = new ResponseInfo<User>();
-        User user = new User();
-        user.setUsername("test");
-        user.setPassword("123456");
+        user.setUsername(user.getUsername());
+        user.setPassword(user.getPassword());
         userService.addUser(user);
         return responseInfo;
     }

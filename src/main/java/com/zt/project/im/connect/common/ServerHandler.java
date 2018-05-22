@@ -39,7 +39,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Message.BaseMessa
            if(baseMessageService == null){
                logger.error("the bean["+beanName+"] was not found! please confirm!");
            }
-           baseMessageService.dealMessage(baseMessage);
+           baseMessageService.dealMessage(baseMessage,channelHandlerContext);
        }else {
            logger.error("baseMessage is null!");
        }

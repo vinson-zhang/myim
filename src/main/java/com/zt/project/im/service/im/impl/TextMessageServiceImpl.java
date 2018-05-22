@@ -5,6 +5,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.zt.project.im.annotation.CustomServiceAnnotation;
 import com.zt.project.im.protobuf.Message;
 import com.zt.project.im.service.im.IBaseMessageService;
+import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class TextMessageServiceImpl implements IBaseMessageService {
 
     @Override
-    public void dealMessage(Message.BaseMessage textMessage) throws InvalidProtocolBufferException {
+    public void dealMessage(Message.BaseMessage textMessage, ChannelHandlerContext ctx) throws InvalidProtocolBufferException {
         System.out.println(textMessage);
         ByteString byteString = textMessage.getBytesData();
         Message.TextMessage textMessage1 = Message.TextMessage.parseFrom(byteString);

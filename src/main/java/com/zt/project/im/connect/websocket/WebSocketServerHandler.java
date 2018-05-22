@@ -42,7 +42,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Message.
 			if(baseMessageService == null){
 				logger.error("the bean["+beanName+"] was not found! please confirm!");
 			}
-			baseMessageService.dealMessage(baseMessage);
+			baseMessageService.dealMessage(baseMessage, ctx);
 		}else {
 			logger.error("baseMessage is null!");
 		}
@@ -55,6 +55,8 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Message.
 				channel.writeAndFlush(baseMessage);
 			}
 		}
+
+//		channelGroup.find()
 
 //		ctx.channel().writeAndFlush(baseMessage);
 //		byte[] msgBytes = msg.toByteArray();

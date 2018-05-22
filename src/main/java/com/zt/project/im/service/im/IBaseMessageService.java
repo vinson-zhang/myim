@@ -2,6 +2,7 @@ package com.zt.project.im.service.im;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.zt.project.im.protobuf.Message;
+import io.netty.channel.ChannelHandlerContext;
 
 /**
  * @Author：ZhangTao
@@ -10,5 +11,5 @@ import com.zt.project.im.protobuf.Message;
  */
 public interface IBaseMessageService {
 
-    void dealMessage(Message.BaseMessage baseMessage) throws InvalidProtocolBufferException;
+    void dealMessage(Message.BaseMessage baseMessage, ChannelHandlerContext ctx) throws InvalidProtocolBufferException;
 }
