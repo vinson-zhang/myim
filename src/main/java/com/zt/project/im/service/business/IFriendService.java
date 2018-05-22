@@ -14,4 +14,10 @@ public interface IFriendService {
      * @param friend
      */
     void addFriend(Friend friend);
+
+    /**
+     * 同意添加好友
+     * @param friend
+     */
+    void agreeFriend(Friend friend);
 }

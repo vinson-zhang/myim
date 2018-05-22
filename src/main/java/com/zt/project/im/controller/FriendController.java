@@ -28,4 +28,11 @@ public class FriendController {
         return responseInfo;
     }
 
+    @RequestMapping(value = "/agree",method = RequestMethod.POST)
+    public ResponseInfo agreeFriend(@RequestBody Friend friend){
+        ResponseInfo responseInfo = new ResponseInfo();
+        friendService.agreeFriend(friend);
+        return responseInfo;
+    }
+
 }

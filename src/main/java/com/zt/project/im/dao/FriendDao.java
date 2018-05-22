@@ -13,4 +13,6 @@ public interface FriendDao {
 
     void add(Friend friend);
 
+    void update(Friend friend);
+
 }

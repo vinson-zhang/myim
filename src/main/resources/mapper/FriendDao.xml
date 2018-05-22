@@ -8,4 +8,10 @@
         values (#{userId},#{friendId},#{status},#{createTime})
     </insert>
 
+    <update id="update" parameterType="Friend">
+        update t_friend
+        set status = #{status}
+        where user_id = #{userId} and friend_id = #{friendId}
+    </update>
+
 </mapper>
