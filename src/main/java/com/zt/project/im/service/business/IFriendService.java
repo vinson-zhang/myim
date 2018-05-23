@@ -1,6 +1,9 @@
 package com.zt.project.im.service.business;
 
 import com.zt.project.im.bean.Friend;
+import com.zt.project.im.bean.vo.UserFriendVO;
+
+import java.util.List;
 
 /**
  * ZhangTao
@@ -20,4 +23,10 @@ public interface IFriendService {
      * @param friend
      */
     void agreeFriend(Friend friend);
+
+    /**
+     * 获取好友列表
+     * @return
+     */
+    List<UserFriendVO> getUserFriend(Integer userId);
 }

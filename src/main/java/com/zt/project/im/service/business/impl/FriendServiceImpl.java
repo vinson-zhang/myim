@@ -1,6 +1,7 @@
 package com.zt.project.im.service.business.impl;
 
 import com.zt.project.im.bean.Friend;
+import com.zt.project.im.bean.vo.UserFriendVO;
 import com.zt.project.im.dao.FriendDao;
 import com.zt.project.im.enumpack.FriendStatusEnum;
 import com.zt.project.im.service.business.IFriendService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * ZhangTao
@@ -46,5 +48,11 @@ public class FriendServiceImpl implements IFriendService {
         another.setStatus(FriendStatusEnum.AGREED.getStatus());
         another.setCreateTime(new Date());
         friendDao.add(another);
+    }
+
+    @Override
+    public List<UserFriendVO> getUserFriend(Integer userId) {
+        List<UserFriendVO> userFriendVOList = friendDao.getUserFriend(userId);
+        return userFriendVOList;
     }
 }

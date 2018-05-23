@@ -8,6 +8,14 @@
         from t_user
         where username = #{username}
     </select>
+
+    <select id="getUserVO" resultType="UserVO">
+        select
+        id,username,nickname,age,gender,head_photo
+        from t_user
+        where username = #{username}
+    </select>
+
     <insert id="addUserInfo" parameterType="User">
         insert into user (username, password
         )

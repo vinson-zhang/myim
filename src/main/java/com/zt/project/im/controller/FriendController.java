@@ -1,6 +1,8 @@
 package com.zt.project.im.controller;
 
 import com.zt.project.im.bean.Friend;
+import com.zt.project.im.bean.User;
+import com.zt.project.im.bean.vo.UserFriendVO;
 import com.zt.project.im.service.business.IFriendService;
 import com.zt.project.im.util.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * ZhangTao
@@ -32,6 +36,14 @@ public class FriendController {
     public ResponseInfo agreeFriend(@RequestBody Friend friend){
         ResponseInfo responseInfo = new ResponseInfo();
         friendService.agreeFriend(friend);
+        return responseInfo;
+    }
+
+    @RequestMapping(value = "/getFriend",method = RequestMethod.GET)
+    public ResponseInfo<List<UserFriendVO>> getFriend(Integer userId){
+        ResponseInfo<List<UserFriendVO>> responseInfo = new ResponseInfo<List<UserFriendVO>>();
+        List<UserFriendVO> userFriendVOList = friendService.getUserFriend(userId);
+        responseInfo.setResult(userFriendVOList);
         return responseInfo;
     }
 

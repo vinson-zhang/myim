@@ -1,6 +1,7 @@
 package com.zt.project.im.service.business.impl;
 
 import com.zt.project.im.bean.User;
+import com.zt.project.im.bean.vo.UserVO;
 import com.zt.project.im.dao.UserDao;
 import com.zt.project.im.service.business.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getUser(String username) {
         return userDao.getUser(username);
+    }
+
+    @Override
+    public UserVO getUserVO(String username) {
+        UserVO userVO = userDao.getUserVO(username);
+        return userVO;
     }
 }

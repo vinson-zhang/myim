@@ -1,6 +1,7 @@
 package com.zt.project.im.controller;
 
 import com.zt.project.im.bean.User;
+import com.zt.project.im.bean.vo.UserVO;
 import com.zt.project.im.service.business.IUserService;
 import com.zt.project.im.util.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,13 @@ public class UserController {
         user.setUsername(user.getUsername());
         user.setPassword(user.getPassword());
         userService.addUser(user);
+        return responseInfo;
+    }
+
+    @RequestMapping("/getUserInfoByUserName")
+    public ResponseInfo<UserVO> getUserInfoByUserName(String username){
+        ResponseInfo<UserVO> responseInfo = new ResponseInfo<UserVO>();
+        responseInfo.setResult(userService.getUserVO(username));
         return responseInfo;
     }
 

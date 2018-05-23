@@ -1,6 +1,7 @@
 package com.zt.project.im.service.business;
 
 import com.zt.project.im.bean.User;
+import com.zt.project.im.bean.vo.UserVO;
 
 import java.util.List;
 
@@ -26,5 +27,12 @@ public interface IUserService {
      * @return
      */
     User getUser(String username);
+
+    /**
+     * 获取简略用户信息
+     * @param username
+     * @return
+     */
+    UserVO getUserVO(String username);
 }
 
