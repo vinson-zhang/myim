@@ -30,28 +30,28 @@ public class ClientHandler extends SimpleChannelInboundHandler {
 //            ctx.writeAndFlush(testStr+i+"\r\n");
 //        }
 //        System.out.println("client send finish.........");
-        Message.TextMessage textMessage = Message.TextMessage.newBuilder()
-                .setMsgId("123")
-                .setUserId("123")
-                .setReciverId("456")
-                .setContent("hello world")
-                .build();
-        ByteString textByteString = textMessage.toByteString();
-        StudentOuterClass.Student student = StudentOuterClass.Student.newBuilder()
-                .setAge(0)
-                .setAddress("西安")
-                .setName("mike")
-                .build();
-        ByteString studentByteString = student.toByteString();
-        Message.BaseMessage baseMessage = Message.BaseMessage.newBuilder()
-                .setMsgType(3)
-                .setBytesData(studentByteString)
-                .setLen(textByteString.size()+1)
-                .build();
-
-        for(int i = 0;i<1;i++){
-            ctx.writeAndFlush(baseMessage);
-        }
+//        Message.TextMessage textMessage = Message.TextMessage.newBuilder()
+//                .setMsgId("123")
+//                .setUserId("123")
+//                .setReciverId("456")
+//                .setContent("hello world")
+//                .build();
+//        ByteString textByteString = textMessage.toByteString();
+//        StudentOuterClass.Student student = StudentOuterClass.Student.newBuilder()
+//                .setAge(0)
+//                .setAddress("西安")
+//                .setName("mike")
+//                .build();
+//        ByteString studentByteString = student.toByteString();
+//        Message.BaseMessage baseMessage = Message.BaseMessage.newBuilder()
+//                .setMsgType(3)
+//                .setBytesData(studentByteString)
+//                .setLen(textByteString.size()+1)
+//                .build();
+//
+//        for(int i = 0;i<1;i++){
+//            ctx.writeAndFlush(baseMessage);
+//        }
         System.out.println("client send finish.........");
     }
 }

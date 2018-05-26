@@ -1,5 +1,6 @@
 package com.zt.project.im.service.im.impl;
 
+import com.google.protobuf.ByteString;
 import com.zt.project.im.annotation.CustomServiceAnnotation;
 import com.zt.project.im.protobuf.Message;
 import com.zt.project.im.service.im.IBaseMessageService;
@@ -18,5 +19,11 @@ public class StudentMsgServiceImpl implements IBaseMessageService {
     @Override
     public void dealMessage(Message.BaseMessage student, ChannelHandlerContext ctx) {
         System.out.printf("I am student");
+    }
+
+
+    @Override
+    public boolean validateParam(ByteString byteString, ChannelHandlerContext ctx) {
+        return false;
     }
 }
