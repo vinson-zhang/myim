@@ -54,4 +54,10 @@ public class UserServiceImpl implements IUserService {
         UserVO userVO = userDao.getUserVO(username);
         return userVO;
     }
+
+    @Override
+    public UserVO getUserVO(User user) {
+        UserVO userVO = userDao.getUserVOByUser(user);
+        return userVO;
+    }
 }

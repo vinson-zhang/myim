@@ -28,6 +28,9 @@ public interface IUserService {
      */
     User getUser(String username);
 
+
+    UserVO getUserVO(User user);
+
     /**
      * 获取简略用户信息
      * @param username

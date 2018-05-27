@@ -25,6 +25,13 @@ public interface UserDao {
 
     /**
      * 获取用户信息
+     * @param user
+     * @return
+     */
+    UserVO getUserVOByUser(User user);
+
+    /**
+     * 获取用户信息
      * @param username
      * @return
      */

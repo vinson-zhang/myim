@@ -7,6 +7,7 @@ import com.zt.project.im.util.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,6 +29,18 @@ public class UserController {
         List<User> user = userService.getUserInfo();
         System.out.println(user.toString());
         return user;
+    }
+
+    @RequestMapping(value = "/getUserInfoByUser",method = RequestMethod.POST)
+    public ResponseInfo<UserVO> getUserInfoById(@RequestBody User user) {
+//    public ResponseInfo<UserVO> getUserInfoById(Integer userId,String username) {
+        ResponseInfo<UserVO> responseInfo = new ResponseInfo<UserVO>();
+//        User user = new User();
+//        user.setId(userId);
+//        user.setUsername(username);
+        UserVO userVO = userService.getUserVO(user);
+        responseInfo.setResult(userVO);
+        return responseInfo;
     }
 
     @RequestMapping("/addUserInfo")

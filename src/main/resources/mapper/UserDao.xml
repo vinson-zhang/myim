@@ -16,6 +16,21 @@
         where username = #{username}
     </select>
 
+    <select id="getUserVOByUser" resultType="UserVO" parameterType="User">
+        select
+        id,username,nickname,age,gender,head_photo as headPhoto
+        from t_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            OR 1 != 1
+        </where>
+    </select>
+
     <insert id="addUserInfo" parameterType="User">
         insert into user (username, password
         )
