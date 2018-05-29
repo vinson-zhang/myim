@@ -4,6 +4,7 @@ import com.zt.project.im.bean.User;
 import com.zt.project.im.enumpack.ErrorCodeEnum;
 import com.zt.project.im.service.business.IUserService;
 import com.zt.project.im.util.ResponseInfo;
+import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -22,7 +23,7 @@ import java.util.Map;
  * 2018/5/13 20:08
  * Description: loginController
  */
-@Controller
+@Api
 @RestController
 @RequestMapping(value = "/login")
 public class LoginController {

@@ -4,6 +4,7 @@ import com.zt.project.im.bean.User;
 import com.zt.project.im.bean.vo.UserVO;
 import com.zt.project.im.service.business.IUserService;
 import com.zt.project.im.util.ResponseInfo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import java.util.List;
  * @Description:
  * @Date: Created in 13:14 2018/3/26
  */
+@Api
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -24,7 +26,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping("/getUserInfo")
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     public List<User> getUserInfo() {
         List<User> user = userService.getUserInfo();
         System.out.println(user.toString());
@@ -43,7 +45,7 @@ public class UserController {
         return responseInfo;
     }
 
-    @RequestMapping("/addUserInfo")
+    @RequestMapping(value = "/addUserInfo", method = RequestMethod.POST)
     public ResponseInfo<User> addUserInfo(@RequestBody User user) {
         ResponseInfo<User> responseInfo = new ResponseInfo<User>();
         user.setUsername(user.getUsername());
@@ -52,7 +54,7 @@ public class UserController {
         return responseInfo;
     }
 
-    @RequestMapping("/getUserInfoByUserName")
+    @RequestMapping(value = "/getUserInfoByUserName", method = RequestMethod.GET)
     public ResponseInfo<UserVO> getUserInfoByUserName(String username){
         ResponseInfo<UserVO> responseInfo = new ResponseInfo<UserVO>();
         responseInfo.setResult(userService.getUserVO(username));

@@ -5,6 +5,7 @@ import com.zt.project.im.bean.User;
 import com.zt.project.im.bean.vo.UserFriendVO;
 import com.zt.project.im.service.business.IFriendService;
 import com.zt.project.im.util.ResponseInfo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import java.util.List;
  * 2018/5/22 21:12
  * Description:好友关系
  */
+@Api
 @RestController
 @RequestMapping(value = "/friend")
 public class FriendController {
