@@ -2,9 +2,12 @@ package com.zt.project.im.controller;
 
 import com.zt.project.im.bean.User;
 import com.zt.project.im.bean.vo.UserVO;
+import com.zt.project.im.enumpack.ErrorCodeEnum;
 import com.zt.project.im.service.business.IUserService;
 import com.zt.project.im.util.ResponseInfo;
 import io.swagger.annotations.Api;
+import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,14 +26,25 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private static Logger logger = Logger.getLogger(UserController.class);
+
     @Autowired
     private IUserService userService;
 
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    public List<User> getUserInfo() {
-        List<User> user = userService.getUserInfo();
-        System.out.println(user.toString());
-        return user;
+    public ResponseInfo<UserVO> getUserInfo() {
+        ResponseInfo<UserVO> responseInfo = new ResponseInfo<UserVO>();
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        if(username == null){
+            responseInfo.setCode(ErrorCodeEnum.OTHER_ERROR.getCode());
+            responseInfo.setDesc(ErrorCodeEnum.OTHER_ERROR.getDesc());
+            return responseInfo;
+        }
+        User user = new User();
+        user.setUsername(username);
+        UserVO userVO = userService.getUserVO(user);
+        responseInfo.setResult(userVO);
+        return responseInfo;
     }
 
     @RequestMapping(value = "/getUserInfoByUser",method = RequestMethod.POST)
