@@ -106,6 +106,19 @@
 			<version>1.4.0</version>
 		</dependency>
 
+		<!--<dependency>-->
+			<!--<groupId>com.baidu</groupId>-->
+			<!--<artifactId>jprotobuf</artifactId>-->
+			<!--<version>2.1.11</version>-->
+		<!--</dependency>-->
+
+		<!--// 2.x支持版本-->
+		<!--<dependency>-->
+			<!--<groupId>com.baidu</groupId>-->
+			<!--<artifactId>jprotobuf-precompile-plugin</artifactId>-->
+			<!--<version>2.0.4</version>-->
+		<!--</dependency>-->
+
 	</dependencies>
 
 	<build>
@@ -145,6 +158,25 @@
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
+
+			<!--<plugin>-->
+				<!--<groupId>com.baidu</groupId>-->
+				<!--<artifactId>jprotobuf-precompile-plugin</artifactId>-->
+				<!--<version>2.0.4</version>-->
+				<!--<configuration>-->
+					<!--<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>-->
+					<!--<filterClassPackage>com.baidu</filterClassPackage>-->
+				<!--</configuration>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<phase>compile</phase>-->
+						<!--<goals>-->
+							<!--<goal>precompile</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
+
 		</plugins>
 		<extensions>
 			<extension>
@@ -153,6 +185,7 @@
 				<version>${plugin.os.version}</version>
 			</extension>
 		</extensions>
+
 	</build>
 
 

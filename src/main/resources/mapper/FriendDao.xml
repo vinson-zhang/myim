@@ -15,7 +15,7 @@
     </update>
 
     <select id="getUserFriend" parameterType="java.lang.Integer" resultType="UserFriendVO">
-        select u.id,u.username,u.nickname,u.head_photo as headPhoto,f.status
+        select u.id,u.username,u.nickname,u.head_photo,f.status
         from t_friend f left join t_user u on f.friend_id = u.id
         where f.user_id = #{0}
     </select>
