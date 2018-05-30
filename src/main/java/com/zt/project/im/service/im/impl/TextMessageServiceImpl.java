@@ -29,9 +29,10 @@ public class TextMessageServiceImpl implements IBaseMessageService {
         ByteString byteString = baseMessage.getBytesData();
         if(validateParam(byteString,ctx)){
             Message.TextMessageReq textMessageReq = Message.TextMessageReq.parseFrom(byteString);
+            logger.info(textMessageReq);
             Integer reciverId = textMessageReq.getReciverId();
             ChannelHandlerContext reciverCtx = UserConnectInfo.getChannelHandlerContextByUserId(reciverId);
-            if(ctx != null){
+            if(reciverCtx != null){
                 reciverCtx.writeAndFlush(baseMessage);
                 //TODO：存储消息
             }else {
@@ -43,7 +44,11 @@ public class TextMessageServiceImpl implements IBaseMessageService {
                     .setCode(ErrorCodeEnum.SUCCESS.getCode())
                     .setDesc(ErrorCodeEnum.SUCCESS.getDesc())
                     .build();
-            ctx.writeAndFlush(messageRes);
+            Message.BaseMessage baseMessageRes = Message.BaseMessage.newBuilder()
+                    .setMsgType(6)
+                    .setBytesData(messageRes.toByteString())
+                    .build();
+            ctx.writeAndFlush(baseMessageRes);
         }
     }
 
@@ -57,7 +62,7 @@ public class TextMessageServiceImpl implements IBaseMessageService {
                     .setCode(ErrorCodeEnum.PARAM_INVALID.getCode())
                     .setDesc(ErrorCodeEnum.PARAM_INVALID.getDesc())
                     .build();
-            ctx.writeAndFlush(MyByteBufUtil.buildBaseMessage(MyByteBufUtil.getMsgTypeByAnnotation(TextMessageServiceImpl.class),messageRes.toByteString()));
+            ctx.writeAndFlush(MyByteBufUtil.buildBaseMessage(6,messageRes.toByteString()));
             return false;
         }
         return true;

@@ -47,13 +47,12 @@ public class UserController {
         return responseInfo;
     }
 
-    @RequestMapping(value = "/getUserInfoByUser",method = RequestMethod.POST)
-    public ResponseInfo<UserVO> getUserInfoById(@RequestBody User user) {
+    @RequestMapping(value = "/getUserInfoById",method = RequestMethod.GET)
+    public ResponseInfo<UserVO> getUserInfoById(Integer userId) {
 //    public ResponseInfo<UserVO> getUserInfoById(Integer userId,String username) {
         ResponseInfo<UserVO> responseInfo = new ResponseInfo<UserVO>();
-//        User user = new User();
-//        user.setId(userId);
-//        user.setUsername(username);
+        User user = new User();
+        user.setId(userId);
         UserVO userVO = userService.getUserVO(user);
         responseInfo.setResult(userVO);
         return responseInfo;

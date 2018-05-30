@@ -47,14 +47,14 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Message.
 			logger.error("baseMessage is null!");
 		}
 
-		for (String key : channelHashMap.keySet()){
-			Channel channel = channelHashMap.get(key).channel();
-			if(channel.isActive() && !ctx.toString().equals(key)){
-//			if(channel.isActive()){
-				System.out.println("writeTo:"+channel.id());
-				channel.writeAndFlush(baseMessage);
-			}
-		}
+//		for (String key : channelHashMap.keySet()){
+//			Channel channel = channelHashMap.get(key).channel();
+//			if(channel.isActive() && !ctx.toString().equals(key)){
+////			if(channel.isActive()){
+//				System.out.println("writeTo:"+channel.id());
+//				channel.writeAndFlush(baseMessage);
+//			}
+//		}
 
 //		channelGroup.find()
 
@@ -78,7 +78,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Message.
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		super.channelActive(ctx);
 		channelHashMap.put(ctx.toString(),ctx);
-		System.out.println("wolianjiele*****************************");
+		System.out.println("*****************************connId:"+ctx.channel().id());
 	}
 
 
