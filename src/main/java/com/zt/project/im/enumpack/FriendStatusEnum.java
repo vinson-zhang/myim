@@ -10,7 +10,8 @@ public enum  FriendStatusEnum {
     APPLYING(1,"申请中"),
     AGREED(2,"已同意"),
     BLACK_LIST(3,"黑名单"),
-    DELETE(4,"已删除");
+    DELETE(4,"已删除"),
+    REJECT(5,"已拒绝");
 
     private Integer status;
 
