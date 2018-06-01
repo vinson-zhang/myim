@@ -52,4 +52,14 @@ public class LoginController {
         return responseInfo;
     }
 
+    @RequestMapping(method = RequestMethod.GET,value = "/logout")
+    public ResponseInfo logout(){
+        ResponseInfo responseInfo = new ResponseInfo();
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        responseInfo.setCode(ErrorCodeEnum.SUCCESS.getCode());
+        responseInfo.setDesc(ErrorCodeEnum.SUCCESS.getDesc());
+        return responseInfo;
+    }
+
 }
