@@ -13,8 +13,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
 public class ClientHandler extends SimpleChannelInboundHandler<Message.BaseMessage> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message.BaseMessage o) throws Exception {
-        System.out.println(o);
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message.BaseMessage baseMessage) throws Exception {
+        ByteString bytesData = baseMessage.getBytesData();
+        Message.MessageRes messageResp = Message.MessageRes.parseFrom(bytesData);
+        System.out.println(messageResp);
     }
 
     @Override
