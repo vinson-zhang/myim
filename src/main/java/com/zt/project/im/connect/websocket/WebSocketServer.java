@@ -2,7 +2,7 @@ package com.zt.project.im.connect.websocket;
 
 import com.zt.project.im.connect.common.Server;
 import com.zt.project.im.connect.common.ServerHandler;
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

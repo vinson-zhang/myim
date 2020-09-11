@@ -1,6 +1,6 @@
 package com.zt.project.im.connect.websocket;
 
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

@@ -1,11 +1,27 @@
 syntax = "proto3";
-option java_package="com.zt.project.im.protobuf";
+option java_package="com.zt.project.im.proto";
 //option java_outer_classname="Student";
 message BaseMessage{
-    int32  msgType =2;
+    enum MsgType {
+        COMMON_RESP = 0;
+        LOGIN_REQ = 1;
+        LOGIN_RESP = 2;
+        HEARTBEAT_REQ = 3;
+        HEARTBEAT_RESP = 4;
+        TEXT_MESSAGE_REQ = 5;
+        MESSAGE_RESP = 6;
+    }
+
+    MsgType msgType =2;
     bytes  bytesData = 3;
 //    int32  checkSum = 5; // adler32 of nameLen, typeName and protobufData
 }
+
+message CommonResp{
+    int32 code = 1;
+    string desc = 2;
+}
+
 
 //type = 1
 message LoginReq{

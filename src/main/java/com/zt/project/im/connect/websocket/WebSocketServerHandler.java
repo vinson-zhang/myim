@@ -1,9 +1,12 @@
 package com.zt.project.im.connect.websocket;
 
 import com.zt.project.im.connect.common.ServerHandler;
+import com.zt.project.im.enumpack.ErrorCodeEnum;
 import com.zt.project.im.listener.CustomAnnotationListener;
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import com.zt.project.im.service.im.IBaseMessageService;
+import com.zt.project.im.service.im.ImProtoDealStrategyFactory;
+import com.zt.project.im.util.MyByteBufUtil;
 import com.zt.project.im.util.SpringBeanUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,6 +15,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,43 +29,24 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Message.
 
 	private static Map<String,ChannelHandlerContext> channelHashMap = new HashMap<String,ChannelHandlerContext>();
 
+	@Autowired
+	private ImProtoDealStrategyFactory imProtoDealStrategyFactory;
+
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message.BaseMessage baseMessage) throws Exception {
 		System.out.println("===================================");
 		System.out.println("收到的消息:"+baseMessage);
-//		Message.TextMessage textMessage = msg.toBuilder().setContent("服务器收到了....").build();
-
-		if(baseMessage != null){
-			int type = baseMessage.getMsgType();
-			String beanName = CustomAnnotationListener.messageDealServiceMap.get(type);
-			if(beanName == null){
-				logger.error("the type["+type+"] was not defined!");
+		try {
+			Message.BaseMessage.MsgType msgType = baseMessage.getMsgType();
+			IBaseMessageService strategyByType = imProtoDealStrategyFactory.getStrategyByType(msgType);
+			if(strategyByType == null){
+				ctx.writeAndFlush(MyByteBufUtil.buildErrorResp(ErrorCodeEnum.PARAM_INVALID));
 				return;
 			}
-			IBaseMessageService baseMessageService = (IBaseMessageService) SpringBeanUtils.getBean(beanName);
-			if(baseMessageService == null){
-				logger.error("the bean["+beanName+"] was not found! please confirm!");
-			}
-			baseMessageService.dealMessage(baseMessage, ctx);
-		}else {
-			logger.error("baseMessage is null!");
+			strategyByType.dealMessage(baseMessage,ctx);
+		}catch (Exception e){
+			ctx.writeAndFlush(MyByteBufUtil.buildErrorResp(ErrorCodeEnum.OTHER_ERROR));
 		}
-
-//		for (String key : channelHashMap.keySet()){
-//			Channel channel = channelHashMap.get(key).channel();
-//			if(channel.isActive() && !ctx.toString().equals(key)){
-////			if(channel.isActive()){
-//				System.out.println("writeTo:"+channel.id());
-//				channel.writeAndFlush(baseMessage);
-//			}
-//		}
-
-//		channelGroup.find()
-
-//		ctx.channel().writeAndFlush(baseMessage);
-//		byte[] msgBytes = msg.toByteArray();
-//		ByteBuf byteBuf = Unpooled.buffer().readBytes(msgBytes);
-//		ctx.channel().writeAndFlush(new BinaryWebSocketFrame(byteBuf));
 	}
 	
 	@Override

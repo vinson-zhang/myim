@@ -2,7 +2,7 @@ package com.zt.project.im.connect.websocket;
 
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;

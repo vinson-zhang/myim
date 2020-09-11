@@ -2,7 +2,7 @@ package com.zt.project.im.service.im;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import io.netty.channel.ChannelHandlerContext;
 
 /**

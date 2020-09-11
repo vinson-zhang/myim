@@ -3,9 +3,10 @@ package com.zt.project.im.service.im.impl;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.zt.project.im.annotation.CustomServiceAnnotation;
+import com.zt.project.im.bean.constant.GlobalConstant;
 import com.zt.project.im.connect.UserConnectInfo;
 import com.zt.project.im.enumpack.ErrorCodeEnum;
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import com.zt.project.im.service.im.IBaseMessageService;
 import com.zt.project.im.util.MyByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,8 +19,7 @@ import org.springframework.util.StringUtils;
  * @Description:
  * @Date: Created in 22:45 2018/4/12
  */
-@CustomServiceAnnotation(type = 5)
-@Service
+@Service(GlobalConstant.STRATEGY_PREFIX_PROTO_DEAL+"5")
 public class TextMessageServiceImpl implements IBaseMessageService {
 
     private static Logger logger = Logger.getLogger(TextMessageServiceImpl.class);
@@ -45,7 +45,7 @@ public class TextMessageServiceImpl implements IBaseMessageService {
                     .setDesc(ErrorCodeEnum.SUCCESS.getDesc())
                     .build();
             Message.BaseMessage baseMessageRes = Message.BaseMessage.newBuilder()
-                    .setMsgType(6)
+                    .setMsgType(Message.BaseMessage.MsgType.MESSAGE_RESP)
                     .setBytesData(messageRes.toByteString())
                     .build();
             ctx.writeAndFlush(baseMessageRes);
@@ -62,7 +62,7 @@ public class TextMessageServiceImpl implements IBaseMessageService {
                     .setCode(ErrorCodeEnum.PARAM_INVALID.getCode())
                     .setDesc(ErrorCodeEnum.PARAM_INVALID.getDesc())
                     .build();
-            ctx.writeAndFlush(MyByteBufUtil.buildBaseMessage(6,messageRes.toByteString()));
+            ctx.writeAndFlush(MyByteBufUtil.buildBaseMessage(Message.BaseMessage.MsgType.MESSAGE_RESP,messageRes.toByteString()));
             return false;
         }
         return true;

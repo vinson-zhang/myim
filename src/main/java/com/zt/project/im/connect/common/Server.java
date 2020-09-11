@@ -1,6 +1,6 @@
 package com.zt.project.im.connect.common;
 
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

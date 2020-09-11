@@ -3,7 +3,8 @@ package com.zt.project.im.util;
 import com.alibaba.fastjson.JSON;
 import com.google.protobuf.ByteString;
 import com.zt.project.im.annotation.CustomServiceAnnotation;
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.enumpack.ErrorCodeEnum;
+import com.zt.project.im.proto.Message;
 import org.apache.log4j.Logger;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -41,11 +42,25 @@ public class MyByteBufUtil {
      * @param byteString
      * @return
      */
-    public static Message.BaseMessage buildBaseMessage(Integer type, ByteString byteString){
+    public static Message.BaseMessage buildBaseMessage(Message.BaseMessage.MsgType type, ByteString byteString){
         Message.BaseMessage baseMessage = Message.BaseMessage.newBuilder()
                 .setMsgType(type)
                 .setBytesData(byteString)
                 .build();
         return baseMessage;
+    }
+
+    /**
+     * 构建错误响应
+     * @param errorCodeEnum
+     * @return
+     */
+    public static Message.BaseMessage buildErrorResp(ErrorCodeEnum errorCodeEnum){
+        Message.CommonResp resp = Message.CommonResp.newBuilder()
+                .setCode(errorCodeEnum.getCode())
+                .setDesc(errorCodeEnum.getDesc())
+                .build();
+
+        return buildBaseMessage(Message.BaseMessage.MsgType.COMMON_RESP, resp.toByteString());
     }
 }

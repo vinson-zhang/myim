@@ -1,8 +1,11 @@
 package com.zt.project.im.connect.common;
 
+import com.zt.project.im.enumpack.ErrorCodeEnum;
 import com.zt.project.im.listener.CustomAnnotationListener;
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import com.zt.project.im.service.im.IBaseMessageService;
+import com.zt.project.im.service.im.ImProtoDealStrategyFactory;
+import com.zt.project.im.util.MyByteBufUtil;
 import com.zt.project.im.util.SpringBeanUtils;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -10,6 +13,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @Author：ZhangTao
@@ -28,21 +32,18 @@ public class ServerHandler extends SimpleChannelInboundHandler<Message.BaseMessa
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message.BaseMessage baseMessage) throws Exception {
-       if(baseMessage != null){
-           int type = baseMessage.getMsgType();
-           String beanName = CustomAnnotationListener.messageDealServiceMap.get(type);
-           if(beanName == null){
-               logger.error("the type["+type+"] was not defined!");
-               return;
-           }
-           IBaseMessageService baseMessageService = (IBaseMessageService) SpringBeanUtils.getBean(beanName);
-           if(baseMessageService == null){
-               logger.error("the bean["+beanName+"] was not found! please confirm!");
-           }
-           baseMessageService.dealMessage(baseMessage,channelHandlerContext);
-       }else {
-           logger.error("baseMessage is null!");
-       }
+        try {
+            Message.BaseMessage.MsgType msgType = baseMessage.getMsgType();
+            IBaseMessageService strategyByType = ImProtoDealStrategyFactory.getStrategyByType(msgType);
+            if(strategyByType == null){
+                channelHandlerContext.writeAndFlush(MyByteBufUtil.buildErrorResp(ErrorCodeEnum.PARAM_INVALID));
+                return;
+            }
+            strategyByType.dealMessage(baseMessage,channelHandlerContext);
+        }catch (Exception e){
+            channelHandlerContext.writeAndFlush(MyByteBufUtil.buildErrorResp(ErrorCodeEnum.OTHER_ERROR));
+        }
+
     }
 
     @Override

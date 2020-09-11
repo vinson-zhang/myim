@@ -2,7 +2,7 @@ package com.zt.project.im.service.im.impl;
 
 import com.google.protobuf.ByteString;
 import com.zt.project.im.annotation.CustomServiceAnnotation;
-import com.zt.project.im.protobuf.Message;
+import com.zt.project.im.proto.Message;
 import com.zt.project.im.service.im.IBaseMessageService;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
  * @Description:
  * @Date: Created in 23:08 2018/4/12
  */
-@CustomServiceAnnotation(type = 2)
 @Service
 public class StudentMsgServiceImpl implements IBaseMessageService {
 
